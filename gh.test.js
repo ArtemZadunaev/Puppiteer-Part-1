@@ -46,7 +46,6 @@ describe("Github page tests", () => {
   }, 10000);
 });
 
-
 test("title content on enterprise", async () => {
   const expected =
     "GitHub Enterprise · The AI-powered developer platform for the agent-ready enterprise · GitHub";
@@ -57,27 +56,25 @@ test("title content on enterprise", async () => {
   expect(title).toEqual(expected);
 }, 10000);
 
-
 test("The first link attribute", async () => {
-    const expected = "#start-of-content";
+  const expected = "#start-of-content";
 
-    await page.goto("https://github.com/customer-stories");
-    const actual = await page.$eval("a", (link) => link.getAttribute("href"));
+  await page.goto("https://github.com/customer-stories");
+  const actual = await page.$eval("a", (link) => link.getAttribute("href"));
 
-    expect(actual).toEqual(expected);
-  }, 10000);
+  expect(actual).toEqual(expected);
+}, 10000);
 
+test("The page Secutity Lab contains ", async () => {
+  const expected = "Protect your project";
+  const btnSelector = ".btn-animated.btn-hero-protect-project.mt-3";
 
-  test("The page Secutity Lab contains ", async () => {
-    const expected = "Protect your project";
-    const btnSelector = ".btn-animated.btn-hero-protect-project.mt-3";
+  await page.goto("https://securitylab.github.com/");
 
-    await page.goto("https://securitylab.github.com/");
+  await page.waitForSelector(btnSelector, {
+    visible: true,
+  });
+  const actual = await page.$eval(btnSelector, (link) => link.textContent);
 
-    await page.waitForSelector(btnSelector, {
-      visible: true,
-    });
-    const actual = await page.$eval(btnSelector, (link) => link.textContent);
-
-    expect(actual).toContain(expected);
-  }, 10000);
+  expect(actual).toContain(expected);
+}, 10000);
